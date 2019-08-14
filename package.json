@@ -1,7 +1,7 @@
 {
   "name": "webpack-dvacore",
   "version": "1.0.0",
-  "description": "study webpack+dva",
+  "description": "study webpack+dva-core",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
