@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 function resolve(dir) {
   return path.resolve(__dirname, "..", dir);
@@ -8,10 +9,7 @@ function resolve(dir) {
 
 module.exports = {
   context: path.resolve(__dirname, "..", "src/"),
-  entry: [
-      'react-hot-loader/patch',
-      "./index.js"
-  ],
+  entry:  "./index.js",
   output: {
     path: resolve("dist"), // 打包后项目 输出到项目根目录下 dist 文件夹
     filename: "index.[hash:8].js", // 输出的 入口JS文件名称
@@ -21,6 +19,7 @@ module.exports = {
   resolve: {
     alias: {
       "@src": resolve("src"),
+      'react-dom': '@hot-loader/react-dom'
     },
     modules: [
       // 优化模块查找路径
@@ -49,6 +48,7 @@ module.exports = {
       filename: "index.html",   // 文件名; 默认是index.html
       template: "./index.html", // 指定模板html文件
       hash: true                // 默认值为false, 值为true时，html 引入的脚本、css都加hash值（清除缓存）
-    })
+    }),
+    new ProgressBarPlugin()     // 构建进度条
   ]
 };

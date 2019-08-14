@@ -14,8 +14,6 @@ const app = dva({
   history: createBrowserHistory()
 });
 
-// ReactDOM.render(<App />, document.getElementById("root"));
-
 const render = Component => {
   ReactDOM.render(
       <AppContainer>
@@ -28,7 +26,6 @@ const render = Component => {
 const App = app.start(<Router app={app} />);
 
 render(App);
-
 
 if (module.hot) {
   module.hot.accept();
