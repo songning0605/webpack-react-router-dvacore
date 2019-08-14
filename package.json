@@ -9,8 +9,13 @@
   },
   "keywords": [
     "webpack",
-    "dva"
+    "dva-core",
+    "react"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/songning0605/webpack-react-router-dvacore.git"
+  },
   "author": "songning",
   "license": "ISC",
   "devDependencies": {
