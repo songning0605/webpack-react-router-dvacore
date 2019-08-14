@@ -1,3 +1,4 @@
+import { AppContainer } from 'react-hot-loader';
 import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
@@ -13,6 +14,22 @@ const app = dva({
   history: createBrowserHistory()
 });
 
+// ReactDOM.render(<App />, document.getElementById("root"));
+
+const render = Component => {
+  ReactDOM.render(
+      <AppContainer>
+        <Component />
+      </AppContainer>,
+      document.getElementById('root')
+  );
+}
+
 const App = app.start(<Router app={app} />);
 
-ReactDOM.render(<App />, document.getElementById("root"));
+render(App);
+
+
+if (module.hot) {
+  module.hot.accept();
+}

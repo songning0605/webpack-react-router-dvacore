@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 function resolve(dir) {
   return path.resolve(__dirname, "..", dir);
@@ -7,7 +8,10 @@ function resolve(dir) {
 
 module.exports = {
   context: path.resolve(__dirname, "..", "src/"),
-  entry: "./index.js", // 打包后输出的文件名 为 main.js
+  entry: [
+      'react-hot-loader/patch',
+      "./index.js"
+  ],
   output: {
     path: resolve("dist"), // 打包后项目 输出到项目根目录下 dist 文件夹
     filename: "index.[hash:8].js", // 输出的 入口JS文件名称
@@ -32,7 +36,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/, // 匹配.js文件<></>
         use: { loader: "babel-loader" },
-        exclude: /node_modules/, // 排除不要加载的文件夹
+        exclude: /node_modules/,     // 排除不要加载的文件夹
         include: resolve("src") // 指定需要加载的文件夹
       }
     ]
@@ -40,10 +44,11 @@ module.exports = {
 
   // 插件 相关配置
   plugins: [
+    new CleanWebpackPlugin(),   // 编译时清空输出目录
     new HtmlWebpackPlugin({
-      filename: "index.html", // 文件名; 默认是index.html
+      filename: "index.html",   // 文件名; 默认是index.html
       template: "./index.html", // 指定模板html文件
-      hash: true // 默认值为false, 值为true时，html 引入的脚本、css都加hash值（清除缓存）
+      hash: true                // 默认值为false, 值为true时，html 引入的脚本、css都加hash值（清除缓存）
     })
   ]
 };
