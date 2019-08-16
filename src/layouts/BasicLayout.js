@@ -4,12 +4,34 @@ import { connect } from "react-redux";
 import { Link, Route, Redirect, Switch } from 'react-router-dom';
 import PageLoading from "../components/PageLoading";
 
+const modelNotExisted = (app, model) =>
+    !app._models.some(({ namespace }) => {
+      return namespace === model.namespace;
+    });
+
 const lazyLoad = (app, path, props) => {
   return Loadable({
     loader: () => import('../pages/' + path).then(raw => {
       const Component = raw.default || raw;
-      return innerProps =>
-        React.createElement(Component, {
+
+      try {
+        const models = require('../pages/' + path + '/models/');
+
+        console.log('../pages/' + path + '/models/');
+        // 按需加载组件和model
+        import('../pages/' + path + '/models/').then(models=> {
+          Object.values(models).forEach(model => {
+            if (modelNotExisted(app, model)) {
+              app.model(model);
+            }
+          })
+        });
+      }catch (e) {
+        console.log('path not exist', '../pages/' + path + '/models/');
+      }
+
+
+      return innerProps =>  React.createElement(Component, {
           ...Object.assign({}, innerProps, props),
         });
     }),
@@ -52,4 +74,4 @@ BasicLayout.defaultProps = {
   routes: [],
 }
 
-export default connect(({ global }) => global)(BasicLayout);
+export default connect(({ global, homeModel, aboutModel }) => ({...global, ...homeModel, ...aboutModel}))(BasicLayout);

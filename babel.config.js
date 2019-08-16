@@ -12,7 +12,17 @@ module.exports = function (api) {
         ["import", { "libraryName": "antd", "libraryDirectory": "lib","style": true}],            // antd 按需加载
         ["@babel/plugin-proposal-optional-chaining"],                                             // 支持可选链(?.)语法 obj?.innerobj?.property
         ["react-hot-loader/babel"],
-        ["@babel/plugin-syntax-dynamic-import"]
+        ["@babel/plugin-syntax-dynamic-import"],
+        [
+            "@babel/plugin-transform-runtime",
+            {
+                "absoluteRuntime": false,
+                "corejs": false,
+                "helpers": true,
+                "regenerator": true,
+                "useESModules": false
+            }
+        ]
     ];
 
     return {

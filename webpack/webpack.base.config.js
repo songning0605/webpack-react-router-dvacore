@@ -15,7 +15,6 @@ module.exports = {
     filename: "index.[hash:8].js", // 输出的 入口JS文件名称
     publicPath: "/"
   },
-
   resolve: {
     alias: {
       "@src": resolve("src"),
@@ -41,6 +40,10 @@ module.exports = {
     ]
   },
 
+    node: {
+        fs: 'empty'
+    },
+
   // 插件 相关配置
   plugins: [
     new CleanWebpackPlugin(),   // 编译时清空输出目录
@@ -50,5 +53,5 @@ module.exports = {
       hash: true                // 默认值为false, 值为true时，html 引入的脚本、css都加hash值（清除缓存）
     }),
     new ProgressBarPlugin()     // 构建进度条
-  ]
+  ],
 };
