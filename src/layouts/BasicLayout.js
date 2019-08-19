@@ -15,8 +15,6 @@ const lazyLoad = (app, path, props) => {
       const Component = raw.default || raw;
 
       try {
-        const models = require('../pages/' + path + '/models/');
-
         console.log('../pages/' + path + '/models/');
         // 按需加载组件和model
         import('../pages/' + path + '/models/').then(models=> {
